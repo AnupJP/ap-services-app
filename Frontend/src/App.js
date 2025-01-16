@@ -24,17 +24,11 @@ const theme = createTheme({
 });
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Check authentication status on mount
-  useEffect(() => {
+  // Initialize isAuthenticated based on the presence of a token in localStorage
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const token = localStorage.getItem('authToken'); // Replace 'authToken' with your token key
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, []);
+    return !!token; // Convert the token to a boolean
+  });
 
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // Clear the token on logout
